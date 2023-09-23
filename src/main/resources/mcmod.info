@@ -1,0 +1,16 @@
+[
+{
+  "modid": "restrictedcrops",
+  "name": "Restricted Crops",
+  "description": "A Mod that limits where ICropGrow and ISaplingGrow events occur, based on biome and dimension. Also affects bonemealing",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["SmokeyTheBandicoot"],
+  "credits": "Lothrazar, for the original idea and base code used as a tutorial",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
