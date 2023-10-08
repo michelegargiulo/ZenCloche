@@ -12,7 +12,7 @@ apply plugin: 'net.minecraftforge.gradle.forge'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-version = 1.0
+version = "${zencloche_version}"
 group = "com.smokeythebandicoot.zencloche" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'zencloche'
 
