@@ -55,7 +55,7 @@ repositories {
 dependencies {
 
     deobfCompile "blusunrize:ImmersiveEngineering:0.12-92-+"
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.8.468"
+    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.20.695"
 
 }
 

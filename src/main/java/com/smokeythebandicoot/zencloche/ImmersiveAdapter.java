@@ -6,9 +6,7 @@ import crafttweaker.api.item.IItemStack;
 import crafttweaker.api.liquid.ILiquidStack;
 import crafttweaker.api.minecraft.CraftTweakerMC;
 import crafttweaker.api.oredict.IOreDictEntry;
-import net.minecraft.item.ItemStack;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
