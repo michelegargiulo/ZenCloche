@@ -16,6 +16,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import stanhebben.zenscript.annotations.Optional;
@@ -40,6 +41,7 @@ public class GardenClocheIntegration {
     private static Field BJHseedOutputMapField = null;
     private static Field BJHseedRenderMapField = null;
     private static Field BJHplantHandlersField = null;
+    private static Field BJHsoilTextureMapField = null;
 
     @ZenMethod
     @ZenDoc(value="Register the given ingredient as fertilizer with the given growth multiplier. <br>Will throw an exeception for ingredients such as <*> that can't be resolved to a list of items.")
@@ -265,6 +267,17 @@ public class GardenClocheIntegration {
         return BJHplantHandlersField;
     }
 
+    private static Field getBJHsoilTextureMapField() {
+        try {
+            BJHsoilTextureMapField = BelljarHandler.class.getDeclaredField("soilTextureMap");
+        } catch (NoSuchFieldException e) {
+            ZenCloche.logger.error(e.getMessage());
+            return null;
+        }
+        BJHsoilTextureMapField.setAccessible(true);
+        return BJHsoilTextureMapField;
+    }
+
     @ZenMethod
     @ZenDoc(value="Register the given seed so it can be grown in the Graden Cloche. <br>Specifying a list of drops, the needed soil and optionally a block to display visually inside the cloche. <br>If no soil is specified, dirt is used instead. <br>If no display block is specified, the seed is used as block. <br>This may result in texture errors if the item can't be a block.")
     public static void registerCrop(IItemStack seed, IItemStack[] drops) {
@@ -353,6 +366,27 @@ public class GardenClocheIntegration {
             BJHseedSoilMapField.set(null, seedSoilMap);
             BJHseedOutputMapField.set(null, seedOutputMap);
             BJHseedRenderMapField.set(null, seedRenderMap);
+
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @ZenMethod
+    @ZenDoc(value = "Override the soil texture with the specified Resource Location")
+    public static void setSoilTexture(IItemStack soil, String resourceLocation) {
+
+        ComparableItemStack soilStack = new ComparableItemStack(CraftTweakerMC.getItemStack(soil), false, false);
+
+        if (BJHsoilTextureMapField == null) {
+            BJHsoilTextureMapField = getBJHsoilTextureMapField();
+        }
+
+        try {
+            HashMap<ComparableItemStack, ResourceLocation> soilTextureMap = (HashMap<ComparableItemStack, ResourceLocation>)BJHsoilTextureMapField.get(null);
+            soilTextureMap.put(soilStack, new ResourceLocation(resourceLocation));
+            BJHsoilTextureMapField.set(null, soilTextureMap);
 
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
